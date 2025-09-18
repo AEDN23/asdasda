@@ -1,0 +1,47 @@
+Fatal error: Uncaught mysqli_sql_exception: Unknown column 'bm.supplier' in 'field list' in C:\laragon\www\INVENTORY-PGA\admin\masuk.php:214 Stack trace: #0 C:\laragon\www\INVENTORY-PGA\admin\masuk.php(214): mysqli_query(Object(mysqli), '\n ...') #1 {main} thrown in C:\laragon\www\INVENTORY-PGA\admin\masuk.php on line 214
+
+
+ <tbody>
+                            <?php
+                            $ambilsemuadatastock = mysqli_query($conn, "
+                                    SELECT bm.transaksi, bm.kode_barang, bm.tanggal_masuk, bm.supplier, mb.jenis_barang, mb.nama_barang, mb.maker, mb.satuan, bm.jumlah_masuk, bm.note 
+                                    FROM barang_masuk bm
+                                    LEFT JOIN master_barang mb ON bm.kode_barang = mb.kode_barang
+                                    ORDER BY bm.tanggal_masuk DESC
+                                    ");
+
+                            $i = 1;
+                            while ($data = mysqli_fetch_array($ambilsemuadatastock)) {
+                                $transaksi = $data['transaksi'];
+                                $kodebarang = $data['kode_barang'];
+                                $tanggal = $data['tanggal_masuk'];
+                                $supplier = $data['supplier'];
+                                $jenisbarang = $data['jenis_barang'];
+                                $namabarang = $data['nama_barang'];
+                                $maker = $data['maker'];
+                                $satuan = $data['satuan'];
+                                $qty = $data['jumlah_masuk'];
+                                $note = $data['note'];
+                            ?>
+                                <tr class="text-center">
+                                    <td><?= $transaksi; ?></td>
+                                    <td><?= $kodebarang; ?></td>
+                                    <td><?= $tanggal; ?></td>
+                                    <td><?= $supplier; ?></td>
+                                    <td><?= $jenisbarang; ?></td>
+                                    <td><?= $namabarang; ?></td>
+                                    <td><?= $maker; ?></td>
+                                    <td><?= $satuan; ?></td>
+                                    <td><?= $qty; ?></td>
+                                    <td><?= $note; ?></td>
+
+                                    <td><a href="../hasil/masuk.php?transaksi=<?= $transaksi; ?>"><button class="btn btn-primary">DETAIL</button></a></td>
+
+
+
+
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
